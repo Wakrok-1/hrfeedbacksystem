@@ -88,8 +88,8 @@ All actions are logged. Employees can track their complaint status at any time u
 - Tailwind CSS + shadcn/ui
 
 **Infrastructure**
-- Backend: Railway
-- Frontend: Vercel
+- Backend: Render (free tier)
+- Frontend: Vercel (free tier)
 - Database + Storage: Supabase (free tier)
 
 ---
@@ -197,21 +197,57 @@ npm run dev
 
 ## Deployment
 
-| Service | Platform | Config |
+All services used are completely free — no credit card required.
+
+| Service | Platform | Free Tier |
 |---|---|---|
-| Backend | Railway | Root dir: `backend`, env vars in dashboard |
-| Frontend | Vercel | Root dir: `frontend`, `VITE_API_URL` env var |
-| Database | Supabase | Free tier, connection string in Railway |
-| File Storage | Supabase Storage | Public bucket `hr-feedback` |
+| Backend | [Render](https://render.com) | 750 hrs/month, spins down after 15 min inactivity |
+| Frontend | [Vercel](https://vercel.com) | Unlimited deployments |
+| Database | [Supabase](https://supabase.com) | 500MB PostgreSQL |
+| File Storage | Supabase Storage | 1GB, no egress fees |
+| AI | Groq API | Free tier (Llama 3.3 70B) |
 
-After deploying both services, update `FRONTEND_URL` in Railway to your Vercel URL to fix CORS.
+### Deploy Backend (Render)
 
-Run migrations on production:
+1. Go to [render.com](https://render.com) → **New Web Service** → connect GitHub repo
+2. Root directory: `backend`
+3. Build command: `pip install -r requirements.txt`
+4. Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Add all environment variables in the **Environment** tab (see `.env` template above)
+6. Set `FRONTEND_URL` to a placeholder first — update after frontend is deployed
+7. Copy the generated Render URL (e.g. `https://hr-feedback-backend.onrender.com`)
+
+> Note: Free tier spins down after 15 minutes of inactivity. First request after idle takes ~30 seconds to cold start.
+
+### Deploy Frontend (Vercel)
+
+1. Go to [vercel.com](https://vercel.com) → **New Project** → import GitHub repo
+2. Root directory: `frontend`
+3. Framework preset: **Vite**
+4. Add environment variable: `VITE_API_URL=https://your-render-url.onrender.com`
+5. Deploy → copy your Vercel URL
+
+### Update CORS
+
+After both are deployed, go back to Render → Environment → update:
+```
+FRONTEND_URL=https://your-app.vercel.app
+```
+Render will redeploy automatically.
+
+### Run Database Migrations
+
+In Render → your web service → **Shell** tab:
 ```bash
-npm install -g @railway/cli
-railway login
-railway link
-railway run alembic upgrade head
+alembic upgrade head
+```
+
+Or use the Render CLI:
+```bash
+npm install -g @render-com/cli
+render login
+render ssh <service-name>
+alembic upgrade head
 ```
 
 ---
@@ -229,7 +265,7 @@ railway run alembic upgrade head
 | Analytics | `/api/analytics/` | 12 analytics endpoints |
 | Uploads | `/api/upload/` | File upload to Supabase Storage |
 
-Full interactive docs: `https://your-railway-url.railway.app/docs`
+Full interactive docs: `https://your-render-url.onrender.com/docs`
 
 ---
 
