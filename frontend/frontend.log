@@ -1,0 +1,154 @@
+
+> hr-feedback-frontend@0.1.0 dev
+> vite
+
+Port 5173 is in use, trying another one...
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m1069[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5174[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m6:31:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/index.css, /src/context/AuthContext.tsx, /src/pages/Admin/index.tsx, /src/pages/Track/index.tsx, /src/pages/Submit/ComplaintForm.tsx[22m
+[2m6:31:28 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.tsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m6:31:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css, /src/components/ProtectedRoute.tsx, /src/pages/Admin/layout.tsx, /src/pages/Login/index.tsx, /src/pages/Admin/index.tsx[22m
+[2m6:51:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m6:51:05 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m6:51:11 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/index.tsx, /src/index.css[22m
+[2m8:10:19 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m8:10:36 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m8:10:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m8:11:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/index.tsx, /src/index.css[22m
+[2m8:11:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/StatusBadge.tsx, /src/index.css[22m
+[2m8:11:55 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m8:12:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m8:13:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Submit/CategorySelect.tsx, /src/index.css[22m
+[2m8:13:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Submit/SuccessScreen.tsx, /src/index.css[22m
+[2m9:44:08 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m9:44:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m9:44:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m9:44:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m9:44:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m9:44:52 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/context/AuthContext.tsx, /src/index.css[22m
+[2m9:44:52 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.tsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m9:44:52 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css, /src/components/ProtectedRoute.tsx, /src/pages/Admin/layout.tsx, /src/pages/Login/index.tsx, /src/pages/Admin/index.tsx, /src/pages/Vendor/layout.tsx, /src/pages/Vendor/index.tsx[22m
+[2m9:44:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/context/AuthContext.tsx, /src/index.css[22m
+[2m9:44:57 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.tsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m9:44:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css, /src/components/ProtectedRoute.tsx, /src/pages/Admin/layout.tsx, /src/pages/Login/index.tsx, /src/pages/Admin/index.tsx, /src/pages/Vendor/layout.tsx, /src/pages/Vendor/index.tsx[22m
+[2m10:21:03 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/types/complaint.ts[22m
+[2m10:21:43 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Track/index.tsx, /src/index.css[22m
+[2m10:26:48 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m10:26:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/context/AuthContext.tsx, /src/index.css[22m
+[2m10:29:06 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m10:29:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m10:50:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m10:50:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m10:59:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m11:02:56 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Vendor/layout.tsx, /src/index.css[22m
+[2m11:03:03 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Vendor/layout.tsx, /src/index.css[22m
+[2m11:03:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m11:03:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m11:06:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m11:10:06 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m11:10:17 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m11:10:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m11:10:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m11:10:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m11:16:01 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m11:16:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Home/index.tsx, /src/index.css[22m
+[2m11:26:09 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m11:27:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Home/index.tsx, /src/index.css[22m
+[2m4:11:21 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m4:11:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m4:11:40 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m4:11:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m4:11:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m4:12:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m4:12:12 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m4:12:19 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m4:12:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m4:12:38 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m4:12:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m4:15:10 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/types/admin.ts[22m
+[2m4:27:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m4:27:19 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m4:27:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m5:06:41 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/types/complaint.ts[22m
+[2m5:06:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/StatusBadge.tsx, /src/index.css[22m
+[2m5:06:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m5:07:02 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m5:07:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m5:07:12 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m5:07:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m5:07:20 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m5:07:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m5:07:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m5:08:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/index.tsx, /src/index.css[22m
+[2m5:08:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/index.tsx, /src/index.css[22m
+[2m5:08:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/index.tsx, /src/index.css[22m
+[2m5:08:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/index.tsx, /src/index.css[22m
+[2m5:08:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Track/index.tsx, /src/index.css[22m
+[2m5:10:23 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m8:16:58 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/types/complaint.ts[22m
+[2m8:17:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/StatusBadge.tsx, /src/index.css[22m
+[2m8:17:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m8:17:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m8:17:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Track/index.tsx, /src/index.css[22m
+[2m8:17:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Vendor/Complaints/index.tsx, /src/index.css[22m
+[2m8:19:31 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m8:27:17 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m8:27:21 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m8:27:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m8:27:30 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m8:27:36 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m8:27:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Login/index.tsx, /src/index.css[22m
+[2m8:38:37 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m8:43:48 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/types/auth.ts[22m
+[2m10:04:30 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:04:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:04:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:05:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:05:25 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:20:20 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/types/admin.ts[22m
+[2m11:20:57 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m11:21:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:21:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:21:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:21:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:21:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:21:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:21:48 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m11:22:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m11:35:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m11:35:46 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/StatusBadge.tsx, /src/index.css[22m
+[2m11:40:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/index.tsx, /src/index.css[22m
+[2m10:06:01 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:19 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:30 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:06:55 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:07:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:07:05 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:07:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:07:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:07:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:07:30 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:07:35 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:15:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m10:15:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m10:21:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:21:52 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m10:22:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Complaints/ComplaintDetail.tsx, /src/index.css[22m
+[2m7:16:31 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Urgent/index.tsx, /src/index.css[22m
+[2m7:31:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/layout.tsx, /src/index.css[22m
+[2m7:31:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m7:31:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+[2m7:31:42 PM[22m [36m[1m[vite][22m[39m [32m✨ new dependencies optimized: [33mrecharts[32m[39m
+[2m7:31:42 PM[22m [36m[1m[vite][22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[2m7:32:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Analytics/AIInsights.tsx, /src/index.css[22m
+[2m7:32:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Analytics/RootCause.tsx, /src/index.css[22m
+[2m7:32:37 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Admin/Analytics/index.tsx, /src/index.css[22m
