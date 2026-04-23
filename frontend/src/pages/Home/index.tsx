@@ -84,7 +84,7 @@ export function HomePage() {
       {/* Hero */}
       <section style={styles.hero}>
         <div style={styles.eyebrowWrap}>
-          <span style={styles.eyebrow}>Integrated Feedback Portal · 2025</span>
+          <span style={styles.eyebrow}>Integrated Feedback Portal · 2026</span>
         </div>
         <h1 style={styles.headline}>
           Who are<br />
