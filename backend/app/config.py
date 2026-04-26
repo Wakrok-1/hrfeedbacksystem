@@ -19,7 +19,9 @@ class Settings(BaseSettings):
     RESEND_API_KEY: str = ""
     FROM_EMAIL: str = "noreply@yourdomain.com"
     FRONTEND_URL: str = "http://localhost:5173"
-    IS_PRODUCTION: bool = False  # set IS_PRODUCTION=true on Render/Vercel
+    IS_PRODUCTION: bool = False
+    # comma-separated extra origins, e.g. "https://hrfeedbacksystem.vercel.app,https://www.hrfeedbacksystem.vercel.app"
+    EXTRA_CORS_ORIGINS: str = ""
 
     class Config:
         env_file = ".env"

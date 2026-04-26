@@ -32,9 +32,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="HR Integrated Feedback System", version="1.0.0", lifespan=lifespan)
 
+_cors_origins = {settings.FRONTEND_URL}
+if settings.EXTRA_CORS_ORIGINS:
+    _cors_origins.update(o.strip() for o in settings.EXTRA_CORS_ORIGINS.split(",") if o.strip())
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL],
+    allow_origins=list(_cors_origins),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
