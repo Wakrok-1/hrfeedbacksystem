@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, Cookie, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from jose import JWTError
+from jwt.exceptions import PyJWTError
 from datetime import datetime
 
 from app.database import get_db
@@ -22,29 +22,30 @@ _ACCESS_COOKIE = "access_token"
 _REFRESH_COOKIE = "refresh_token"
 
 
+def _cookie_flags() -> tuple[bool, str]:
+    """Returns (secure, samesite) based on environment."""
+    return settings.IS_PRODUCTION, ("none" if settings.IS_PRODUCTION else "lax")
+
+
 def _set_auth_cookies(response: Response, user_id: int, role: str) -> None:
     access_token = create_access_token(user_id, role)
     refresh_token = create_refresh_token(user_id, role)
-
-    # Production (cross-domain HTTPS): samesite=none + secure
-    # Dev (same-host HTTP): samesite=lax + no secure
-    _secure = settings.IS_PRODUCTION
-    _samesite = "none" if settings.IS_PRODUCTION else "lax"
+    secure, samesite = _cookie_flags()
 
     response.set_cookie(
         key=_ACCESS_COOKIE,
         value=access_token,
         httponly=True,
-        secure=_secure,
-        samesite=_samesite,
+        secure=secure,
+        samesite=samesite,
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
     )
     response.set_cookie(
         key=_REFRESH_COOKIE,
         value=refresh_token,
         httponly=True,
-        secure=_secure,
-        samesite=_samesite,
+        secure=secure,
+        samesite=samesite,
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 86400,
     )
 
@@ -83,12 +84,13 @@ async def login(
         device_token = VendorDeviceToken.generate(user.id)
         db.add(device_token)
         await db.commit()
+        secure, samesite = _cookie_flags()
         response.set_cookie(
             key="vendor_device_token",
             value=device_token.token,
             httponly=True,
-            secure=_secure,
-            samesite=_samesite,
+            secure=secure,
+            samesite=samesite,
             max_age=30 * 86400,
         )
 
@@ -116,7 +118,7 @@ async def refresh(
         if payload.get("type") != "refresh":
             raise credentials_exception
         user_id = int(payload["sub"])
-    except (JWTError, KeyError, ValueError):
+    except (PyJWTError, KeyError, ValueError):
         raise credentials_exception
 
     result = await db.execute(select(User).where(User.id == user_id))
@@ -130,8 +132,7 @@ async def refresh(
 
 @router.post("/logout")
 async def logout(response: Response):
-    _secure = settings.IS_PRODUCTION
-    _samesite = "none" if settings.IS_PRODUCTION else "lax"
-    response.delete_cookie(_ACCESS_COOKIE, httponly=True, secure=_secure, samesite=_samesite)
-    response.delete_cookie(_REFRESH_COOKIE, httponly=True, secure=_secure, samesite=_samesite)
+    secure, samesite = _cookie_flags()
+    response.delete_cookie(_ACCESS_COOKIE, httponly=True, secure=secure, samesite=samesite)
+    response.delete_cookie(_REFRESH_COOKIE, httponly=True, secure=secure, samesite=samesite)
     return {"success": True, "data": None, "message": "Logged out"}

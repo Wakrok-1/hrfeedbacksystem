@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any
-from jose import JWTError, jwt
+import jwt
 import bcrypt
 from app.config import settings
 
@@ -17,8 +17,7 @@ def verify_password(plain: str, hashed: str) -> bool:
 
 
 def _create_token(data: dict[str, Any], expires_delta: timedelta) -> str:
-    payload = data.copy()
-    payload["exp"] = datetime.now(timezone.utc) + expires_delta
+    payload = {**data, "exp": datetime.now(timezone.utc) + expires_delta}
     return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
@@ -37,5 +36,5 @@ def create_refresh_token(user_id: int, role: str) -> str:
 
 
 def decode_token(token: str) -> dict[str, Any]:
-    """Raises JWTError if invalid or expired."""
+    """Raises jwt.PyJWTError if invalid or expired."""
     return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
