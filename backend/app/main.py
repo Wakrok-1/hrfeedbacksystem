@@ -1,6 +1,8 @@
+import traceback as _tb
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from app.config import settings
@@ -31,6 +33,25 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="HR Integrated Feedback System", version="1.0.0", lifespan=lifespan)
+
+
+@app.exception_handler(Exception)
+async def _global_exc_handler(request: Request, exc: Exception):
+    """Return 500 JSON with CORS headers so the browser can read the actual error."""
+    origin = request.headers.get("origin", "")
+    headers = {}
+    if origin:
+        headers["Access-Control-Allow-Origin"] = origin
+        headers["Access-Control-Allow-Credentials"] = "true"
+    return JSONResponse(
+        status_code=500,
+        content={
+            "detail": str(exc),
+            "type": type(exc).__name__,
+            "trace": _tb.format_exc(),
+        },
+        headers=headers,
+    )
 
 _cors_origins = {settings.FRONTEND_URL}
 if settings.EXTRA_CORS_ORIGINS:
