@@ -26,20 +26,25 @@ def _set_auth_cookies(response: Response, user_id: int, role: str) -> None:
     access_token = create_access_token(user_id, role)
     refresh_token = create_refresh_token(user_id, role)
 
+    # Production (cross-domain HTTPS): samesite=none + secure
+    # Dev (same-host HTTP): samesite=lax + no secure
+    _secure = settings.IS_PRODUCTION
+    _samesite = "none" if settings.IS_PRODUCTION else "lax"
+
     response.set_cookie(
         key=_ACCESS_COOKIE,
         value=access_token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=_secure,
+        samesite=_samesite,
         max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
     )
     response.set_cookie(
         key=_REFRESH_COOKIE,
         value=refresh_token,
         httponly=True,
-        secure=True,
-        samesite="none",
+        secure=_secure,
+        samesite=_samesite,
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 86400,
     )
 
@@ -82,8 +87,8 @@ async def login(
             key="vendor_device_token",
             value=device_token.token,
             httponly=True,
-            secure=True,
-            samesite="none",
+            secure=_secure,
+            samesite=_samesite,
             max_age=30 * 86400,
         )
 
@@ -125,6 +130,8 @@ async def refresh(
 
 @router.post("/logout")
 async def logout(response: Response):
-    response.delete_cookie(_ACCESS_COOKIE, httponly=True, secure=True, samesite="none")
-    response.delete_cookie(_REFRESH_COOKIE, httponly=True, secure=True, samesite="none")
+    _secure = settings.IS_PRODUCTION
+    _samesite = "none" if settings.IS_PRODUCTION else "lax"
+    response.delete_cookie(_ACCESS_COOKIE, httponly=True, secure=_secure, samesite=_samesite)
+    response.delete_cookie(_REFRESH_COOKIE, httponly=True, secure=_secure, samesite=_samesite)
     return {"success": True, "data": None, "message": "Logged out"}

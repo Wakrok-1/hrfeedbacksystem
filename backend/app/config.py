@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     RESEND_API_KEY: str = ""
     FROM_EMAIL: str = "noreply@yourdomain.com"
     FRONTEND_URL: str = "http://localhost:5173"
+    IS_PRODUCTION: bool = False  # set IS_PRODUCTION=true on Render/Vercel
 
     class Config:
         env_file = ".env"
