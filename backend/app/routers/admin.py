@@ -101,6 +101,7 @@ async def _get_complaint_or_404(id: int, current_user: User, db: AsyncSession) -
         .options(
             selectinload(Complaint.attachments),
             selectinload(Complaint.audit_logs),
+            selectinload(Complaint.approval),
         )
         .where(Complaint.id == id)
     )
