@@ -286,6 +286,48 @@ Return JSON:
         return {"root_causes": [], "summary": "Analysis unavailable"}
 
 
+async def vendor_ai_assist(description: str, category: str, ai_classification: str = "") -> dict:
+    """Vendor-facing AI: detect language, translate if BM, explain complaint, give concrete vendor action.
+    Returns {detected_lang, english_description, summary, suggested_action}"""
+    classification_line = f"\nIssue type: {ai_classification}" if ai_classification else ""
+    prompt = f"""You are an AI assistant helping a maintenance/facilities vendor at Jabil manufacturing handle a worker complaint.
+
+Category: {category}{classification_line}
+Complaint (may be in Bahasa Malaysia or English): {description}
+
+Tasks:
+1. Detect if the complaint is in English (en), Bahasa Malaysia (ms), or other language
+2. Translate to English if not already in English
+3. Write a 1-2 sentence plain English explanation of what the problem is
+4. Give the vendor one concrete, specific physical action they should take to resolve this
+
+Return ONLY valid JSON:
+{{
+  "detected_lang": "en" | "ms" | "other",
+  "english_description": "<English translation, or original if already in English>",
+  "summary": "<1-2 sentence plain English explanation of the complaint>",
+  "suggested_action": "<specific physical action the vendor should take, 1-2 sentences>"
+}}"""
+
+    try:
+        resp = await get_groq().chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.2,
+            max_tokens=400,
+            response_format={"type": "json_object"},
+        )
+        return json.loads(resp.choices[0].message.content)
+    except Exception as e:
+        logger.error(f"vendor_ai_assist error: {e}")
+        return {
+            "detected_lang": "unknown",
+            "english_description": description,
+            "summary": "Unable to process complaint.",
+            "suggested_action": "",
+        }
+
+
 async def generate_forecast(historical_data: list[dict]) -> dict:
     """Returns 7-day ticket volume prediction."""
     prompt = f"""Based on this historical complaint data from Jabil manufacturing, predict the next 7 days of ticket volume.

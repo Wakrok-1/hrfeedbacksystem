@@ -1,16 +1,18 @@
 from fastapi import APIRouter, Cookie, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+from sqlalchemy import select, func, extract
 from sqlalchemy.orm import selectinload
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
 
+from app.config import settings
 from app.database import get_db
 from app.middleware.dependencies import require_vendor
 from app.models.user import User
 from app.models.complaint import Complaint, ComplaintStatus, ComplaintCategory, ComplaintPriority
 from app.models.tracking import AuditLog, VendorDeviceToken
 from app.schemas.complaint import ComplaintOut
+from app.services import ai_service
 
 router = APIRouter(prefix="/api/vendor", tags=["vendor"])
 
@@ -85,7 +87,54 @@ async def get_stats(
         base.where(Complaint.status == ComplaintStatus.resolved).subquery()
     ))).scalar_one()
 
-    return {"success": True, "data": {"total": total, "pending": pending, "in_progress": in_progress, "resolved": resolved}}
+    # Urgent open (not resolved/closed)
+    urgent_open = (await db.execute(select(func.count()).select_from(
+        base.where(
+            Complaint.priority == ComplaintPriority.urgent,
+            Complaint.status.notin_([ComplaintStatus.resolved, ComplaintStatus.closed]),
+        ).subquery()
+    ))).scalar_one()
+
+    # Monthly forecast: 3-month rolling average of assigned complaints
+    now = datetime.now(timezone.utc)
+    monthly_counts = []
+    for i in range(3, 0, -1):
+        m = now.month - i
+        y = now.year
+        while m <= 0:
+            m += 12
+            y -= 1
+        c = (await db.execute(
+            select(func.count()).where(
+                Complaint.assigned_vendor_id == current_user.id,
+                extract("month", Complaint.created_at) == m,
+                extract("year", Complaint.created_at) == y,
+            )
+        )).scalar_one()
+        monthly_counts.append(c)
+
+    forecast_this_month = round(sum(monthly_counts) / 3)
+
+    this_month_count = (await db.execute(
+        select(func.count()).where(
+            Complaint.assigned_vendor_id == current_user.id,
+            extract("month", Complaint.created_at) == now.month,
+            extract("year", Complaint.created_at) == now.year,
+        )
+    )).scalar_one()
+
+    return {
+        "success": True,
+        "data": {
+            "total": total,
+            "pending": pending,
+            "in_progress": in_progress,
+            "resolved": resolved,
+            "urgent_open": urgent_open,
+            "forecast_this_month": forecast_this_month,
+            "this_month_count": this_month_count,
+        },
+    }
 
 
 @router.get("/complaints", response_model=dict)
@@ -93,6 +142,7 @@ async def list_complaints(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
     status: ComplaintStatus | None = Query(None),
+    priority: ComplaintPriority | None = Query(None),
     current_user: User = Depends(require_vendor),
     db: AsyncSession = Depends(get_db),
 ):
@@ -103,6 +153,8 @@ async def list_complaints(
     )
     if status:
         base = base.where(Complaint.status == status)
+    if priority:
+        base = base.where(Complaint.priority == priority)
 
     total = (await db.execute(select(func.count()).select_from(base.subquery()))).scalar_one()
     offset = (page - 1) * page_size
@@ -182,6 +234,24 @@ async def submit_response(
     await db.refresh(audit)
 
     return {"success": True, "data": {"id": audit.id, "created_at": audit.created_at.isoformat()}, "message": "Response submitted"}
+
+
+@router.get("/complaints/{id}/ai-assist", response_model=dict)
+async def ai_assist(
+    id: int,
+    current_user: User = Depends(require_vendor),
+    db: AsyncSession = Depends(get_db),
+):
+    """Translate complaint (if BM), explain it, and suggest a concrete action for the vendor."""
+    if not settings.GROQ_API_KEY:
+        raise HTTPException(status_code=503, detail="AI unavailable — GROQ_API_KEY not configured")
+    complaint = await _get_assigned_or_404(id, current_user, db)
+    result = await ai_service.vendor_ai_assist(
+        description=complaint.description,
+        category=complaint.category.value,
+        ai_classification=complaint.ai_classification or "",
+    )
+    return {"success": True, "data": result}
 
 
 # ── Case preview via device token (no full auth required) ─────────────────────

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2, AlertTriangle, Paperclip, MessageSquare } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { api } from "@/lib/api";
 import { StatusBadge, PriorityBadge } from "@/pages/Admin/Complaints/StatusBadge";
 import { VendorComplaintDetail } from "./VendorComplaintDetail";
@@ -36,15 +37,23 @@ const STATUS_TABS: { value: ComplaintStatus | ""; label: string }[] = [
 ];
 
 export function VendorComplaintsPage() {
+  const [searchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState<ComplaintStatus | "">("");
+  const [urgentOnly, setUrgentOnly] = useState(searchParams.get("priority") === "urgent");
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
+  // Sync urgentOnly with URL param on mount
+  useEffect(() => {
+    if (searchParams.get("priority") === "urgent") setUrgentOnly(true);
+  }, []);
+
   const { data, isLoading } = useQuery<VendorComplaintListResponse>({
-    queryKey: ["vendor-complaints", page, statusFilter],
+    queryKey: ["vendor-complaints", page, statusFilter, urgentOnly],
     queryFn: async () => {
       const params = new URLSearchParams({ page: String(page), page_size: "20" });
       if (statusFilter) params.set("status", statusFilter);
+      if (urgentOnly) params.set("priority", "urgent");
       const res = await api.get<{ data: VendorComplaintListResponse }>(`/api/vendor/complaints?${params}`);
       return res.data.data;
     },
@@ -55,26 +64,42 @@ export function VendorComplaintsPage() {
       <div>
         <h1 className="text-xl font-bold tracking-tight">My Complaints</h1>
         <p className="mt-0.5 text-sm text-muted-foreground">
-          {data ? `${data.total} complaint${data.total !== 1 ? "s" : ""} assigned to you` : "Loading..."}
+          {data
+            ? `${data.total} complaint${data.total !== 1 ? "s" : ""} assigned to you${urgentOnly ? " · urgent only" : ""}`
+            : "Loading..."}
         </p>
       </div>
 
-      {/* Status tabs */}
-      <div className="flex items-center gap-1 overflow-x-auto pb-0.5">
-        {STATUS_TABS.map((tab) => (
-          <button
-            key={tab.value}
-            onClick={() => { setStatusFilter(tab.value as ComplaintStatus | ""); setPage(1); }}
-            className={cn(
-              "shrink-0 rounded-lg px-3.5 py-1.5 text-sm font-medium transition-all duration-150",
-              statusFilter === tab.value
-                ? "bg-[#0F172A] text-white shadow-sm"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
-            )}
-          >
-            {tab.label}
-          </button>
-        ))}
+      {/* Status tabs + urgent toggle */}
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <div className="flex items-center gap-1 overflow-x-auto pb-0.5">
+          {STATUS_TABS.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => { setStatusFilter(tab.value as ComplaintStatus | ""); setPage(1); }}
+              className={cn(
+                "shrink-0 rounded-lg px-3.5 py-1.5 text-sm font-medium transition-all duration-150",
+                statusFilter === tab.value
+                  ? "bg-[#0F172A] text-white shadow-sm"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={() => { setUrgentOnly((v) => !v); setPage(1); }}
+          className={cn(
+            "shrink-0 flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
+            urgentOnly
+              ? "bg-red-500 text-white shadow-sm"
+              : "border border-red-200 text-red-600 hover:bg-red-50"
+          )}
+        >
+          <AlertTriangle className="h-3.5 w-3.5" />
+          Urgent only
+        </button>
       </div>
 
       <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
@@ -107,7 +132,10 @@ export function VendorComplaintsPage() {
                   <tr
                     key={c.id}
                     onClick={() => setSelectedId(c.id)}
-                    className="cursor-pointer hover:bg-muted/20 transition-colors"
+                    className={cn(
+                      "cursor-pointer hover:bg-muted/20 transition-colors",
+                      c.priority === "urgent" && "bg-red-50/30 hover:bg-red-50/50"
+                    )}
                   >
                     <td className="px-5 py-3.5 font-mono text-xs font-semibold text-primary">{c.reference_id}</td>
                     <td className="px-5 py-3.5 text-xs text-muted-foreground">{c.category}</td>

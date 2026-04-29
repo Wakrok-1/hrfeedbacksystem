@@ -4,6 +4,7 @@ import { Search, Loader2, Paperclip, Download, Inbox, Clock } from "lucide-react
 import { api } from "@/lib/api";
 import { Input } from "@/components/ui/input";
 import { ComplaintDetail } from "./ComplaintDetail";
+import { useAuth } from "@/context/AuthContext";
 import type { ComplaintsListResponse, ComplaintListItem } from "@/types/admin";
 import type { ComplaintStatus, Category, Priority } from "@/types/complaint";
 import { cn } from "@/lib/utils";
@@ -59,6 +60,8 @@ function timeAgo(iso: string) {
 // ── Page ───────────────────────────────────────────────────────────────────
 
 export function AdminComplaintsPage({ initialPriority = "" }: { initialPriority?: Priority | "" } = {}) {
+  const { user } = useAuth();
+  const isSuperadmin = user?.role === "superadmin";
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -162,13 +165,15 @@ export function AdminComplaintsPage({ initialPriority = "" }: { initialPriority?
           />
         </form>
         <div className="flex items-center gap-2 ml-auto">
-          <select
-            value={categoryFilter}
-            onChange={(e) => { setCategoryFilter(e.target.value as Category | ""); setPage(1); }}
-            className="h-9 rounded-lg border bg-white px-3 text-sm text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-          >
-            {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
-          </select>
+          {isSuperadmin && (
+            <select
+              value={categoryFilter}
+              onChange={(e) => { setCategoryFilter(e.target.value as Category | ""); setPage(1); }}
+              className="h-9 rounded-lg border bg-white px-3 text-sm text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+            </select>
+          )}
           <select
             value={priorityFilter}
             onChange={(e) => { setPriorityFilter(e.target.value as Priority | ""); setPage(1); }}
