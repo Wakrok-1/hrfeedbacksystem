@@ -98,7 +98,7 @@ async def list_complaints(
 ):
     base = (
         select(Complaint)
-        .options(selectinload(Complaint.attachments))
+        .options(selectinload(Complaint.attachments), selectinload(Complaint.audit_logs))
         .where(Complaint.assigned_vendor_id == current_user.id)
     )
     if status:
