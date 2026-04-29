@@ -206,9 +206,9 @@ export function AdminComplaintsPage({ initialPriority = "" }: { initialPriority?
             {/* Column header */}
             <div className="mb-2 flex items-center px-4 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground/60">
               <span className="flex-1">Complaint</span>
-              <span className="w-36 text-right">Submitter</span>
+              <span className="hidden sm:block w-36 text-right">Submitter</span>
               <span className="w-36 text-right">Status</span>
-              <span className="w-20 text-right">Time</span>
+              <span className="hidden sm:block w-20 text-right">Time</span>
             </div>
 
             <div className="rounded-xl border bg-white overflow-hidden shadow-sm">
@@ -321,7 +321,7 @@ function ComplaintRow({
       </div>
 
       {/* Submitter */}
-      <div className="w-36 shrink-0 text-right">
+      <div className="hidden sm:block w-36 shrink-0 text-right">
         <p className="text-sm font-medium text-foreground/80 truncate">{c.submitter_name.split(" ")[0]}&nbsp;{c.submitter_name.split(" ").slice(-1)[0]}</p>
         <p className="text-xs text-muted-foreground">{c.submitter_employee_id}</p>
       </div>
@@ -337,7 +337,7 @@ function ComplaintRow({
       </div>
 
       {/* Time */}
-      <div className="w-20 shrink-0 text-right">
+      <div className="hidden sm:block w-20 shrink-0 text-right">
         <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
           <Clock className="h-3 w-3 opacity-50" />
           {timeAgo(c.created_at)}

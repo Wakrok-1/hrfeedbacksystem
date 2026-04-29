@@ -114,7 +114,8 @@ export function VendorComplaintsPage() {
           </div>
         ) : (
           <>
-            <table className="w-full text-sm">
+            {/* Desktop table */}
+            <table className="hidden md:table w-full text-sm">
               <thead className="border-b bg-muted/30 text-left text-xs text-muted-foreground">
                 <tr>
                   <th className="px-5 py-3 font-medium">Reference</th>
@@ -165,6 +166,43 @@ export function VendorComplaintsPage() {
                 ))}
               </tbody>
             </table>
+
+            {/* Mobile cards */}
+            <div className="md:hidden divide-y">
+              {data.items.map((c) => (
+                <div
+                  key={c.id}
+                  onClick={() => setSelectedId(c.id)}
+                  className={cn(
+                    "p-4 cursor-pointer active:bg-muted/30 transition-colors",
+                    c.priority === "urgent" && "bg-red-50/30"
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <span className="font-mono text-xs font-semibold text-primary">{c.reference_id}</span>
+                    <StatusBadge status={c.status} />
+                  </div>
+                  <p className="text-sm text-foreground line-clamp-2 mb-2">{c.description}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <PriorityBadge priority={c.priority as any} />
+                    <span className="text-xs text-muted-foreground">{c.category}</span>
+                    {c.attachment_count > 0 && (
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Paperclip className="h-3 w-3" />{c.attachment_count}
+                      </span>
+                    )}
+                    {c.response_count > 0 && (
+                      <span className="flex items-center gap-1 text-xs text-emerald-600">
+                        <MessageSquare className="h-3 w-3" />{c.response_count}
+                      </span>
+                    )}
+                    <span className="ml-auto text-xs text-muted-foreground">
+                      {new Date(c.created_at).toLocaleDateString("en-MY", { day: "numeric", month: "short" })}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
 
             {data.pages > 1 && (
               <div className="flex items-center justify-between border-t px-5 py-3">
