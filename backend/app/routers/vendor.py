@@ -41,6 +41,7 @@ class VendorComplaintDetail(ComplaintOut):
 class ResponseIn(BaseModel):
     content: str
     action_taken: str | None = None
+    attachment_urls: list[str] = []
 
 
 class VendorStatsResponse(BaseModel):
@@ -162,6 +163,8 @@ async def submit_response(
     details: dict = {"response": body.content, "by": current_user.full_name}
     if body.action_taken:
         details["action_taken"] = body.action_taken
+    if body.attachment_urls:
+        details["attachment_urls"] = body.attachment_urls
 
     audit = AuditLog(
         complaint_id=complaint.id,

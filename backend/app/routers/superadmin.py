@@ -81,13 +81,25 @@ async def list_pending_approvals(
     """List all complaints awaiting superadmin approval."""
     result = await db.execute(
         select(Complaint)
-        .options(selectinload(Complaint.approval))
+        .options(selectinload(Complaint.approval), selectinload(Complaint.audit_logs))
         .where(Complaint.status == ComplaintStatus.awaiting_approval)
         .order_by(Complaint.updated_at.desc())
     )
     complaints = result.scalars().all()
 
-    items = [PendingApprovalItem.model_validate(c).model_dump() for c in complaints]
+    items = []
+    for c in complaints:
+        item = PendingApprovalItem.model_validate(c).model_dump()
+        item["vendor_responses"] = [
+            {
+                "id": log.id,
+                "details": log.details or {},
+                "created_at": log.created_at.isoformat(),
+            }
+            for log in c.audit_logs
+            if log.action == "vendor_response"
+        ]
+        items.append(item)
     return {"success": True, "data": {"items": items, "total": len(items)}}
 
 
