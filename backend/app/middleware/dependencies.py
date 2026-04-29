@@ -22,6 +22,7 @@ async def get_current_user(
         if payload.get("type") != "access":
             raise credentials_exception
         user_id: int = int(payload["sub"])
+        token_ver: int = int(payload.get("ver", 0))
     except (PyJWTError, KeyError, ValueError):
         raise credentials_exception
 
@@ -29,6 +30,11 @@ async def get_current_user(
     user = result.scalar_one_or_none()
     if user is None or not user.is_active:
         raise credentials_exception
+
+    # Reject tokens issued before the last logout (token_version mismatch)
+    if token_ver != user.token_version:
+        raise credentials_exception
+
     return user
 
 

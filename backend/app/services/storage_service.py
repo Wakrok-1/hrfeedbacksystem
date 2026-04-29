@@ -23,7 +23,13 @@ from app.config import settings
 
 logger = logging.getLogger(__name__)
 
-ALLOWED_TYPES = {"image/jpeg", "image/png", "video/mp4", "video/quicktime"}
+ALLOWED_TYPES = {
+    "image/jpeg", "image/png", "image/gif", "image/webp",
+    "video/mp4", "video/quicktime",
+    "application/pdf",
+}
+# Explicitly rejected — some browsers may send these for renamed files
+_REJECTED_TYPES = {"image/svg+xml", "text/html", "text/javascript", "application/javascript", "application/x-php"}
 MAX_FILE_MB = 20
 MAX_TOTAL_MB = 60
 MAX_FILES = 5
@@ -32,9 +38,30 @@ MIN_FILES = 1
 EXT_MAP = {
     "image/jpeg": "jpg",
     "image/png": "png",
+    "image/gif": "gif",
+    "image/webp": "webp",
     "video/mp4": "mp4",
     "video/quicktime": "mov",
+    "application/pdf": "pdf",
 }
+
+# Magic byte signatures for content validation. None = skip check (complex/variable format).
+_MAGIC: dict[str, bytes | None] = {
+    "image/jpeg": b"\xff\xd8\xff",
+    "image/png": b"\x89PNG\r\n\x1a\n",
+    "image/gif": b"GIF8",
+    "image/webp": b"RIFF",
+    "application/pdf": b"%PDF",
+    "video/mp4": None,
+    "video/quicktime": None,
+}
+
+
+def _magic_ok(content_type: str, data: bytes) -> bool:
+    sig = _MAGIC.get(content_type)
+    if sig is None:
+        return True
+    return data[:len(sig)] == sig
 
 
 def _supabase_ready() -> bool:
@@ -117,13 +144,27 @@ async def upload_files(files: list[UploadFile], folder: str) -> list[dict]:
     total_mb = 0.0
 
     for file in files:
-        if file.content_type not in ALLOWED_TYPES:
+        ct = file.content_type or ""
+        if ct in _REJECTED_TYPES:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"File type {file.content_type} not allowed. Use JPG, PNG, MP4, or MOV.",
+                detail=f"File type '{ct}' is not permitted.",
+            )
+        if ct not in ALLOWED_TYPES:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"File type not allowed. Use JPG, PNG, GIF, WebP, MP4, MOV, or PDF.",
             )
 
         contents = await file.read()
+
+        # Validate actual file content against the declared MIME type
+        if not _magic_ok(ct, contents):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"{file.filename}: file content does not match declared type.",
+            )
+
         size_mb = len(contents) / (1024 * 1024)
 
         if size_mb > MAX_FILE_MB:
@@ -139,11 +180,11 @@ async def upload_files(files: list[UploadFile], folder: str) -> list[dict]:
                 detail=f"Total upload size exceeds {MAX_TOTAL_MB}MB limit",
             )
 
-        file_url = await upload_file(contents, file.filename or "upload", file.content_type, folder)
+        file_url = await upload_file(contents, file.filename or "upload", ct, folder)
         results.append({
             "file_name": file.filename,
             "file_url": file_url,
-            "file_type": file.content_type,
+            "file_type": ct,
             "file_size_mb": round(size_mb, 3),
         })
 

@@ -2,7 +2,7 @@ import csv
 import io
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, status
 from fastapi.responses import StreamingResponse
-from app.services.auth_service import hash_password
+from app.services.auth_service import hash_password, validate_password
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, or_
 from sqlalchemy.orm import selectinload
@@ -630,6 +630,12 @@ async def create_vendor(
     current_user: User = Depends(require_admin),
     db: AsyncSession = Depends(get_db),
 ):
+    # Enforce minimum password strength
+    try:
+        validate_password(body.password)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
     # Check phone not already taken
     existing = await db.execute(select(User).where(User.phone == body.phone))
     if existing.scalar_one_or_none():

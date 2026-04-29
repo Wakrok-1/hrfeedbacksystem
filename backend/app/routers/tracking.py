@@ -53,7 +53,15 @@ async def track_complaint(
     if not complaint:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Complaint not found")
 
-    # Build status timeline from audit logs
+    # Strip internal-only events — these contain admin/vendor operational details
+    # not meant for the original submitter
+    _INTERNAL_ACTIONS = {
+        "note_added",
+        "vendor_assigned",
+        "submitted_for_approval",
+        "superadmin_approved",
+        "superadmin_rejected",
+    }
     timeline = [
         {
             "action": log.action,
@@ -61,6 +69,7 @@ async def track_complaint(
             "timestamp": log.created_at.isoformat(),
         }
         for log in sorted(complaint.audit_logs, key=lambda l: l.created_at)
+        if log.action not in _INTERNAL_ACTIONS
     ]
 
     # Current step index for progress indicator
